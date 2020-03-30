@@ -10,7 +10,7 @@ FIREBASE_SERVICE_ACCOUNT_KEY_FILE=./serviceAccountKey.json make run
 
 or
 ```
-FIREBASE_SERVICE_ACCOUNT_KEY_FILE=/home/luigi/base/xyz/serviceAccountKey.json ./xyz
+FIREBASE_SERVICE_ACCOUNT_KEY_FILE=./serviceAccountKey.json ./xyz
 ```
 
 Run the API tests in a second shell:
