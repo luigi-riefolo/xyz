@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+// XYZ API Service
+
+package api;
+
+option go_package = "pb";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+
+// User represents an XYZ user.
+message User {
+   string id = 1;
+   string email = 2;
+   string firstname = 3;
+   string lastname = 4;
+   int64 created_at = 5;
+   int64 updated_at = 6;
+}
+
+// CreateUserRequest contains all the fields for creating a user.
+message CreateUserRequest {
+   string email = 1;
+   string password = 2;
+   string firstname = 3;
+   string lastname = 4;
+   string api_token = 5;
+}
+
+// ProjectDevice represents a device added to a project.
+message ProjectDevice {
+	string id = 1;
+	string added_by = 2;
+	string added_at = 3;
+}
+
+// CreateProjectRequest contains all the fields for creating a project.
+message CreateProjectRequest {
+    string api_token = 1;
+    // TODO: user a map for contributors and devices to avoid duplicates
+	repeated string contributors = 2;
+	repeated string devices = 3;
+}
+
+// Project represents an XYZ project.
+message Project {
+	string id = 1;
+	string creator_id = 2;
+
+	repeated string contributors = 3;
+	repeated string devices = 4;
+
+	int64 created_at = 5;
+	int64 updated_at = 6;
+}
+
+// ProjectsList is a list of projects.
+message ProjectsList {
+    repeated Project list = 1;
+}
+
+// Device represents a device that can be used in one or more projects.
+message Device {
+    string id = 1;
+    string description = 2;
+}
+
+// DevicesList is a list of devices.
+message DevicesList {
+    repeated string devices = 1;
+}
+
+// AddProjectContributorsRequest contains
+// a list of contributors to add to a project.
+message AddProjectContributorsRequest {
+    string project_id = 1;
+    repeated string contributors = 2;
+}
+
+// AddProjectDevicesRequest contains
+// a list of devices to add to a project.
+message AddProjectDevicesRequest {
+    string project_id = 1;
+    repeated string devices = 2;
+}
+
+// GetProjectDevicesRequest contains the
+// project ID whose devices will be returned.
+message GetProjectDevicesRequest {
+    string project_id = 1;
+}
+
+// List of all open API endpoints for XYZ service.
+service OpenXYZ {
+
+    // CreateUser creates a user.
+    rpc CreateUser(CreateUserRequest) returns (User) {
+        option (google.api.http) = {
+            post: "/api/createUser"
+            body: "*"
+        };
+    }
+}
+
+
+// List of all API endpoints for XYZ service.
+service XYZ {
+
+    // CreateProject creates a project.
+    rpc CreateProject(CreateProjectRequest) returns (Project) {
+        option (google.api.http) = {
+            post: "/api/createProject"
+            body: "*"
+        };
+    }
+
+    // GetProjects returns the list of projects.
+    rpc GetProjects(google.protobuf.Empty) returns (ProjectsList) {
+        option (google.api.http) = {
+            get: "/api/projects"
+        };
+    }
+
+    // AddProjectContributors adds one or more contributors to a project.
+    rpc AddProjectContributors(AddProjectContributorsRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/api/projects/{project_id}/addContributors"
+            body: "*"
+        };
+    }
+
+    // AddProjectDevices adds one or more devices to a project.
+    rpc AddProjectDevices(AddProjectDevicesRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/api/projects/{project_id}/addDevices"
+            body: "*"
+        };
+    }
+
+    // GetDevices returns the list of devices assigned to a project.
+    rpc GetDevices(GetProjectDevicesRequest) returns (DevicesList) {
+        option (google.api.http) = {
+            get: "/api/projects/{project_id}/devices"
+        };
+    }
+}
