@@ -16,7 +16,7 @@ FIREBASE_SERVICE_ACCOUNT_KEY_FILE=./serviceAccountKey.json ./xyz
 Run the API tests in a second shell:
 
 ```
-make test
+FIREBASE_API_KEY=XXXXXXXXXXX make test
 ```
 
 ## Documentation

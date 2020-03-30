@@ -24,7 +24,8 @@ curl -s -w "\n" -k -d '{
 
 # sign in
 echo -e "\nSign in $USER"
-TOKEN=$(curl -s 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC9PhT4KBuBBqJPBBRuhKIrGB4CzLPTGiU' \
+TOKEN=$(curl -s \
+"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$FIREBASE_API_KEY" \
 -H 'Content-Type: application/json' \
 --data-binary '{
     "email": "'"$USER"'",
