@@ -1,0 +1,40 @@
+[alias]
+  c = checkout
+  ci = commit
+  s = status
+  b = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+[user]
+  email =
+  name =
+[pager]
+  branch = false
+[diff]
+  guitool = meld
+  tool = meld
+[difftool "meld"]
+  cmd = meld \"$LOCAL\" \"$REMOTE\" --label \"DIFF (ORIGINAL MY)\"
+[merge]
+  tool = meld
+[mergetool "meld"]
+  cmd = meld --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output \"$MERGED\" --label \"MERGE (REMOTE BASE MY)\"
+  trustExitCode = false
+#[mergetool]
+#    # don't ask if we want to skip merge
+#    prompt = false
+#
+#    # don't create backup *.orig files
+#    keepBackup = false
+#[merge]
+#	tool = vimdiff
+#	conflictstyle = diff3
+#[mergetool]
+#	prompt = false
+[difftool]
+	prompt = false
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[pager]
+	branch = false
